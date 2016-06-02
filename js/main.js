@@ -4,7 +4,8 @@ $.getJSON( "https://nuvi-challenge.herokuapp.com/activities", function( data ) {
 	var output = "<ul class='results'>";
 	for (var i = 0; i < 20; i++){ //change this to data.length to get all results
 		output += "<li>";
-		output += "<h2>" + data[i].actor_name + "</h2>";
+		output += "<h2><a href='" + data[i].actor_url + "'>" + data[i].actor_name + "</a></h2>";
+		output += "<p> Provider: " + '<span id="provider">' + data[i].provider + "</span></p>";
 		output += "<p> Username: " + data[i].actor_username + "</p>";
 		output += "<img src='" + data[i].actor_avator +"'/>";
 		output += "<p> Description: " + data[i].actor_description + "</p>";

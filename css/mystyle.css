@@ -1,13 +1,24 @@
+/*a {
+	text-decoration: none;
+}*/
+
+#provider
+{
+    text-transform: capitalize;
+}
+
 #results {
 	width: 70%;
 	margin: 0 auto;
 	border-top: 1px dotted #CCC;
 }
+
 #results ul {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
+
 #results ul li {
 	width: 100%;
 	padding: 0 20px;
