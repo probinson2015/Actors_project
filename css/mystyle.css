@@ -1,6 +1,10 @@
-/*a {
-	text-decoration: none;
-}*/
+#shares, .tab {
+	display: inline;
+}
+
+.tab {
+	margin-right: 15px;
+}
 
 #provider
 {
