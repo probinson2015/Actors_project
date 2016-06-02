@@ -6,6 +6,11 @@
 	margin-right: 15px;
 }
 
+.info {
+	margin-left: 10px;
+	display: inline-block;
+}
+
 #provider
 {
     text-transform: capitalize;
@@ -65,10 +70,11 @@
 #results img {
 	float: left;
 	width: 80px;
-	margin-right: 10px;
+	margin-right: 20px;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
+	box-shadow: 10px 10px 5px grey;
 }
 
 @-webkit-keyframes myanim {
