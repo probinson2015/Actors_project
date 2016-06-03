@@ -1,4 +1,4 @@
-.charts {
+.charts{
 	margin-top: 0 !important;
     position: fixed;
     top: 0;
@@ -29,6 +29,7 @@
 
 #results {
 	border-top: 1px dotted #CCC;
+	margin-top: 10px;
 }
 
 #results ul {

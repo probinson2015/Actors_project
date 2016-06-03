@@ -15,10 +15,9 @@ Provider.prototype.increaseShares = function(count){
 var providers = {};
 
 $.getJSON( "https://nuvi-challenge.herokuapp.com/activities", function( data ) {
-	// console.log(data);
 
 	var output = "<ul class='results'>";
-	for (var i = 0; i < 5; i++){ //change this to data.length to get all results
+	for (var i = 0; i < data.length; i++){ 
 		output += "<li>";
 		output += "<h2><a href='" + data[i].actor_url + "'>" + data[i].actor_name + "</a></h2>";
 		output += "<p> Provider: " + '<span class="tab" id="provider">' + data[i].provider + "</span>";
@@ -33,29 +32,18 @@ $.getJSON( "https://nuvi-challenge.herokuapp.com/activities", function( data ) {
 		} else {
 			output += "<p><a href='" + data[i].activity_attachment +"'>View Attachment</a></p>";
 		}
-
+		
 		//format date
 		var activity_date = new Date(data[i].activity_date).toDateString();
-		
+
 		output += "<p> Date Posted: " + activity_date + "</p>";
 		output += "<p class='tab'> Likes: " + data[i].activity_likes + "</p>";
 		output += "<p id='shares'>Shares: " + data[i].activity_shares + "</p>";
 		output += "</span>"
 		output += "</li>";
 
-		provider = {};
-
-		if (!providers[data[i].provider]){
-			//instantiate provider object and add to providers hash
-			providers[data[i].provider] = new Provider(data[i].provider);
-		}
-
-		//increase likes for provider
-		providers[data[i].provider].increaseLikes(data[i].activity_likes);
-
-		//increase shares for provider
-		providers[data[i].provider].increaseShares(data[i].activity_shares);
-
+		//update likes and shares for each provider
+		populateProviders(data[i].provider, data[i].activity_likes, data[i].activity_shares);
 	}
 
 	output += "</ul>";
@@ -68,6 +56,20 @@ $.getJSON( "https://nuvi-challenge.herokuapp.com/activities", function( data ) {
 
 });
 
+function populateProviders(provider, likes_count, shares_count){
+
+	if (!providers[provider]){
+		//instantiate provider object and add to providers hash
+		providers[provider] = new Provider(provider);
+	}
+
+	//increase likes for provider
+	providers[provider].increaseLikes(likes_count);
+
+	//increase shares for provider
+	providers[provider].increaseShares(shares_count);
+
+}
 
 function drawGraphs(providers){
 
@@ -76,21 +78,21 @@ function drawGraphs(providers){
 
 	function drawGraph() {
 
-		// likes_chart
-		var likes_array = [['Provider', 'Likes',]];
-		var shares_array = [['Provider', 'Shares',]];
+		var likes_array = [['Provider', 'Likes', {role: "style"}]];
+		var shares_array = [['Provider', 'Shares', {role: "style"}]];
 
 		//loop through provider hash to build up likes array and shares array
 		for (var provider in providers){
-			likes_array.push([provider, providers[provider].likes]);
-			shares_array.push([provider, providers[provider].shares]);
+			likes_array.push([provider, providers[provider].likes, "#CDF4FE"]);
+			shares_array.push([provider, providers[provider].shares, "#CDF4FE"]);
 		}
 
+		//likes chart
 		var likes_data = google.visualization.arrayToDataTable(likes_array);
-
 		var likes_options = {
 			title: 'Total number of Likes by Provider',
-			chartArea: {width: '50%'},
+			chartArea: {width: '40%'},
+			colors: ["#CDF4FE"],
 			hAxis: {
 			  title: 'Total Likes',
 			  minValue: 0
@@ -102,10 +104,10 @@ function drawGraphs(providers){
 
 		// shares chart
 		var shares_data = google.visualization.arrayToDataTable(shares_array);
-
 		var shares_options = {
 			title: 'Total number of Shares by Provider',
-			chartArea: {width: '50%'},
+			chartArea: {width: '40%'},
+			colors: ["#CDF4FE"],
 			hAxis: {
 			  title: 'Total Shares',
 			  minValue: 0
