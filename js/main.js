@@ -1,6 +1,7 @@
 
 $.getJSON( "https://nuvi-challenge.herokuapp.com/activities", function( data ) {
 	// console.log(data);
+
 	var output = "<ul class='results'>";
 	for (var i = 0; i < 20; i++){ //change this to data.length to get all results
 		output += "<li>";
@@ -32,6 +33,9 @@ $.getJSON( "https://nuvi-challenge.herokuapp.com/activities", function( data ) {
 		output += "</li>";
 	}
 	output += "</ul>";
+	//draw chart derived from total shares and likes
+	drawGraphs(facebook_likes, facebook_shares, twitter_likes, twitter_shares, tumblr_likes, tumblr_shares, instagram_likes, instagram_shares);
+
 	$("#results").html(output);
 
 });
@@ -75,59 +79,60 @@ function increaseShares(provider, count){
 	}
 };
 
-//draw chart derived from total likes
-google.charts.load('current', {packages: ['corechart', 'bar']});
-google.charts.setOnLoadCallback(drawBasic);
+function drawGraphs(facebook_likes, facebook_shares, twitter_likes, twitter_shares, tumblr_likes, tumblr_shares, instagram_likes, instagram_shares){
 
-function drawBasic() {
+	google.charts.load('current', {packages: ['corechart', 'bar']});
+	google.charts.setOnLoadCallback(drawGraph);
 
-	//llikes_chart
-	var likes_data = google.visualization.arrayToDataTable([
-		['Provider', 'Likes',],
-		['Facebook', 5000],
-		['Twitter', 2000],
-		['Tumblr', 22000],
-		['Instagram', 65000],
-	]);
+	function drawGraph() {
 
-	var likes_options = {
-		title: 'Total number of Likes by Provider',
-		chartArea: {width: '50%'},
-		hAxis: {
-		  title: 'Total Likes',
-		  minValue: 0
-		},
-		vAxis: {
-			title: 'Provider'
-		}
-	};
+		// likes_chart
+		var likes_data = google.visualization.arrayToDataTable([
+			['Provider', 'Likes',],
+			['Facebook', facebook_likes],
+			['Twitter', twitter_likes],
+			['Tumblr', tumblr_likes],
+			['Instagram', instagram_likes],
+		]);
 
-	//shares chart
-	var shares_data = google.visualization.arrayToDataTable([
-		['Provider', 'Likes',],
-		['Facebook', 5000],
-		['Twitter', 2000],
-		['Tumblr', 22000],
-		['Instagram', 65000],
-	]);
+		var likes_options = {
+			title: 'Total number of Likes by Provider',
+			chartArea: {width: '50%'},
+			hAxis: {
+			  title: 'Total Likes',
+			  minValue: 0
+			},
+			vAxis: {
+				title: 'Provider'
+			}
+		};
 
-	var shares_options = {
-		title: 'Total number of Likes by Provider',
-		chartArea: {width: '50%'},
-		hAxis: {
-		  title: 'Total Likes',
-		  minValue: 0
-		},
-		vAxis: {
-			title: 'Provider'
-		}
-	};
+		//shares chart
+		var shares_data = google.visualization.arrayToDataTable([
+			['Provider', 'Shares',],
+			['Facebook', facebook_shares],
+			['Twitter', twitter_shares],
+			['Tumblr', tumblr_shares],
+			['Instagram', instagram_shares],
+		]);
 
-var likes_chart = new google.visualization.BarChart(document.getElementById('likes_chart_div'));
-var shares_chart = new google.visualization.BarChart(document.getElementById('shares_chart_div'));
+		var shares_options = {
+			title: 'Total number of Shares by Provider',
+			chartArea: {width: '50%'},
+			hAxis: {
+			  title: 'Total Shares',
+			  minValue: 0
+			},
+			vAxis: {
+				title: 'Provider'
+			}
+		};
 
-likes_chart.draw(likes_data, likes_options);
-shares_chart.draw(shares_data, shares_options)
+		var likes_chart = new google.visualization.BarChart(document.getElementById('likes_chart_div'));
+		var shares_chart = new google.visualization.BarChart(document.getElementById('shares_chart_div'));
+
+		likes_chart.draw(likes_data, likes_options);
+		shares_chart.draw(shares_data, shares_options)
+	}
 }
-
-//draw chart derived from total shares
+// facebook_likes, facebook_shares, twitter_likes, twitter_shares, tumblr_likes, tumblr_shares, instagram_likes, instagram_shares

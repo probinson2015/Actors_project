@@ -9,8 +9,13 @@
         <link rel="stylesheet" href="css/mystyle.css"> 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/bootstrap.min.css">
+        <script src="js/vendor/jquery-2.2.4.min.js"></script>
         <script type="text/javascript" src="js/vendor/loader.js"></script>
-
+        <script>
+            $(document).ready(function() {
+                $('#fade').delay(2000).fadeIn(1000);
+            });
+        </script>
     </head>
     <body>
         <div class = "container-fluid">
@@ -19,7 +24,7 @@
                     <p id="results"></p>
                 </div>
 
-                <div class ="col-md-4">
+                <div id="fade" class ="col-md-4">
                     <div class="charts">
                         <div id="likes_chart_div"></div>
                         <div id="shares_chart_div"></div>
