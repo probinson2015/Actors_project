@@ -1,6 +1,6 @@
 .charts{
 	margin-top: 0 !important;
-    position: fixed;
+    position: absolute;
     top: 0;
     z-index: 10000;
 }
